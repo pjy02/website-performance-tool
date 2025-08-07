@@ -68,577 +68,71 @@ npm run dev
 
 访问 [http://localhost:3000](http://localhost:3000) 查看Web界面。
 
-## 🚀 快速部署指南
+## 🐳 Docker 部署（推荐）
 
-本项目提供了 **一键部署脚本**，支持 Windows、Ubuntu/Debian 和 Docker 环境，让部署变得极其简单！
+本项目提供完整的 Docker 部署方案，支持 GitHub Actions 自动构建和推送到 Docker Hub。
 
-### 🎯 推荐部署方式
-
-#### 🚀 一键部署脚本（最简单）
-```bash
-# 运行主部署脚本，会自动检测系统并推荐最佳部署方式
-chmod +x deploy.sh
-./deploy.sh
-```
-
-#### 🪟 Windows 用户
-```cmd
-# 方法1：使用主部署脚本（推荐）
-# 在 Git Bash 或 WSL 中运行
-deploy.sh
-
-# 方法2：直接使用Windows部署脚本
-# 右键点击 deploy-windows.bat，选择"以管理员身份运行"
-deploy-windows.bat
-```
-
-#### 🐧 Linux 用户
-```bash
-# 方法1：使用主部署脚本（推荐）
-./deploy.sh
-
-# 方法2：直接使用Ubuntu部署脚本
-chmod +x deploy-ubuntu.sh
-sudo ./deploy-ubuntu.sh
-
-# 方法3：使用Docker部署
-chmod +x deploy-docker.sh
-./deploy-docker.sh
-```
-
-#### 🐳 Docker 用户（跨平台）
-```bash
-# 方法1：使用主部署脚本
-./deploy.sh
-
-# 方法2：直接使用Docker部署脚本
-chmod +x deploy-docker.sh
-./deploy-docker.sh
-```
-
-### 📋 详细部署文档
-
-完整的部署指南请查看：[📖 部署文档](./DEPLOYMENT.md)
-
-包含以下详细内容：
-- 🪟 Windows 部署（自动脚本 + 手动部署 + 服务部署）
-- 🐧 Ubuntu/Debian 部署（自动脚本 + 手动部署 + Systemd 服务）
-- 🐳 Docker 部署（自动脚本 + 手动部署 + Docker Compose）
-- 🔧 部署后配置（环境变量、防火墙、反向代理）
-- 🔍 监控和维护（服务管理、日志管理、性能监控）
-- 🚨 故障排除（常见问题、调试模式）
-- 📚 更新和维护（应用更新、系统更新、数据备份）
-- 🎯 最佳实践（安全建议、性能优化、生产环境建议）
-
-### ⚡ 快速开始（开发模式）
-
-如果您只是想快速试用：
+### 快速部署
 
 ```bash
-# 1. 安装依赖
-npm install
+# 克隆项目
+git clone https://github.com/pjy02/website-performance-tool.git
+cd website-performance-tool
 
-# 2. 初始化数据库
-npx prisma generate
-npx prisma db push
+# 启动生产环境
+docker-compose -f docker-compose.prod.yml up -d
 
-# 3. 启动开发服务器
-npm run dev
-
-# 4. 访问 http://localhost:3000
+# 访问应用
+# 浏览器打开: http://localhost:3000
 ```
 
-### 🏗️ 生产环境部署
+### GitHub Actions 自动化
 
-对于生产环境，强烈建议使用：
+项目配置了 GitHub Actions，实现：
 
-1. **一键部署脚本**: `./deploy.sh` - 自动检测系统并推荐最佳部署方式
-2. **Windows**: 使用 `deploy-windows.bat` 自动部署脚本
-3. **Linux**: 使用 `deploy-ubuntu.sh` 自动部署脚本
-4. **Docker**: 使用 `deploy-docker.sh` 自动部署脚本
+- ✅ 自动构建 Docker 镜像
+- ✅ 自动推送到 Docker Hub (`pjy02/website-performance-tool`)
+- ✅ 支持多平台构建（linux/amd64, linux/arm64）
+- ✅ 自动标签管理（latest, 版本号等）
 
-这些脚本会自动处理：
-- ✅ 环境检查和依赖安装
-- ✅ 用户权限和目录创建
-- ✅ 服务配置和启动
-- ✅ 防火墙和安全配置
-- ✅ 监控和日志设置
-- ✅ 系统优化和性能调优
-- ✅ 智能错误处理和回滚
-
-### 🎯 部署后访问
-
-部署完成后，您可以通过以下地址访问：
-
-- **本地访问**: http://localhost:3000
-- **局域网访问**: http://your-ip:3000
-- **域名访问**: http://your-domain.com（需要配置域名）
-
-### 🔧 管理命令
-
-#### Linux (Systemd)
-```bash
-# 查看服务状态
-sudo systemctl status domain-test
-
-# 查看日志
-sudo journalctl -u domain-test -f
-
-# 重启服务
-sudo systemctl restart domain-test
-```
-
-#### Windows (NSSM/PM2)
-```cmd
-# 查看服务状态
-nssm status DomainTest
-
-# 查看日志
-nssm dump DomainTest
-
-# 重启服务
-nssm restart DomainTest
-```
-
-#### Docker
-```bash
-# 查看容器状态
-docker ps
-
-# 查看日志
-docker logs -f domain-test
-
-# 重启容器
-docker restart domain-test
-```
-
----
-
-## 📦 完整部署指南
-
-### Windows 部署
-
-#### 方法一：开发模式部署（推荐用于测试）
-
-```cmd
-# 1. 打开PowerShell或命令提示符
-# 2. 进入项目目录
-cd C:\path\to\your-project
-
-# 3. 安装依赖
-npm install
-
-# 4. 直接启动开发服务器
-npm run dev
-
-# 5. 访问 http://localhost:3000
-```
-
-#### 方法二：IIS 部署（生产环境）
-
-##### 1. 安装 IIS
-以管理员身份运行 PowerShell：
-```powershell
-# 安装 IIS 和相关组件
-Enable-WindowsOptionalFeature -Online -FeatureName IIS-WebServer
-Enable-WindowsOptionalFeature -Online -FeatureName IIS-ApplicationDevelopment
-Enable-WindowsOptionalFeature -Online -FeatureName IIS-HttpLogging
-Enable-WindowsOptionalFeature -Online -FeatureName IIS-Security
-
-# 安装 URL Rewrite 模块
-# 下载：https://www.iis.net/downloads/microsoft/url-rewrite
-```
-
-##### 2. 安装 IISNode
-```powershell
-# 下载并安装 IISNode
-# https://github.com/azure/iisnode/wiki/iisnode-releases
-```
-
-##### 3. 创建 Web.config 文件
-在项目根目录创建 `web.config`：
-```xml
-<?xml version="1.0" encoding="utf-8"?>
-<configuration>
-  <system.webServer>
-    <handlers>
-      <add name="iisnode" path="server.ts" verb="*" modules="iisnode" />
-    </handlers>
-    <rewrite>
-      <rules>
-        <rule name="StaticFiles">
-          <action type="None" stopProcessing="true" />
-          <conditions>
-            <add input="REQUEST_URI" pattern="^/(static|_next|favicon.ico)" />
-          </conditions>
-        </rule>
-        <rule name="DynamicContent">
-          <conditions>
-            <add input="REQUEST_FILENAME" matchType="IsFile" negate="True" />
-          </conditions>
-          <action type="Rewrite" url="server.ts" />
-        </rule>
-      </rules>
-    </rewrite>
-  </system.webServer>
-</configuration>
-```
-
-##### 4. 部署到 IIS
-```powershell
-# 创建网站目录
-New-Item -ItemType Directory -Path "C:\inetpub\wwwroot\domain-test" -Force
-
-# 复制项目文件
-Copy-Item -Path "C:\path\to\your-project\*" -Destination "C:\inetpub\wwwroot\domain-test" -Recurse -Force
-
-# 创建 IIS 网站
-New-Website -Name "DomainTest" -Port 3000 -PhysicalPath "C:\inetpub\wwwroot\domain-test"
-```
-
-#### 方法三：Windows 服务部署
-
-##### 1. 使用 PM2
-```cmd
-# 安装 PM2
-npm install -g pm2
-
-# 安装 PM2 Windows 服务
-pm2-service-install -n DomainTest
-
-# 启动应用
-pm2 start server.ts --name "domain-test"
-pm2 save
-pm2 startup
-```
-
-##### 2. 使用 NSSM
-```cmd
-# 下载 NSSM
-# https://nssm.cc/download
-
-# 安装为 Windows 服务
-nssm install DomainTest "C:\Program Files\nodejs\node.exe" "C:\path\to\your-project\server.ts"
-nssm start DomainTest
-```
-
-### Linux 部署
-
-#### 方法一：直接运行（开发/测试）
+### 直接使用 Docker Hub 镜像
 
 ```bash
-# 1. 更新系统
-sudo apt update && sudo apt upgrade -y  # Ubuntu/Debian
-# 或
-sudo yum update -y  # CentOS/RHEL
+# 拉取镜像
+docker pull pjy02/website-performance-tool:latest
 
-# 2. 安装 Node.js
-# 使用 NodeSource 仓库
-curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-sudo apt-get install -y nodejs
-
-# 3. 安装项目依赖
-npm install
-
-# 4. 初始化数据库
-npx prisma generate
-npx prisma db push
-
-# 5. 启动服务
-npm run dev
+# 运行容器
+docker run -d \
+  --name website-performance-tool \
+  -p 3000:3000 \
+  --restart unless-stopped \
+  pjy02/website-performance-tool:latest
 ```
 
-#### 方法二：Systemd 服务部署（生产环境推荐）
+### 管理命令
 
-##### 1. 创建服务文件
 ```bash
-sudo nano /etc/systemd/system/domain-test.service
-```
-
-##### 2. 服务配置
-```ini
-[Unit]
-Description=Domain Test Application
-After=network.target
-
-[Service]
-Type=simple
-User=www-data
-WorkingDirectory=/var/www/domain-test
-ExecStart=/usr/bin/node server.ts
-Restart=always
-RestartSec=10
-Environment=NODE_ENV=production
-Environment=PORT=3000
-
-[Install]
-WantedBy=multi-user.target
-```
-
-##### 3. 部署和启动
-```bash
-# 创建应用目录
-sudo mkdir -p /var/www/domain-test
-sudo useradd -r -s /bin/false domain-test
-
-# 复制项目文件
-sudo cp -r /path/to/your-project/* /var/www/domain-test/
-sudo chown -R domain-test:domain-test /var/www/domain-test
-
-# 安装依赖
-cd /var/www/domain-test
-sudo -u domain-test npm install
-sudo -u domain-test npx prisma generate
-
-# 启动服务
-sudo systemctl daemon-reload
-sudo systemctl enable domain-test
-sudo systemctl start domain-test
-
 # 查看状态
-sudo systemctl status domain-test
-```
-
-#### 方法三：Docker 部署（跨平台推荐）
-
-##### 1. 创建 Dockerfile
-```dockerfile
-# 多阶段构建
-FROM node:18-alpine AS builder
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci --only=production
-COPY . .
-RUN npm run build
-
-# 生产镜像
-FROM node:18-alpine AS runner
-WORKDIR /app
-
-# 复制构建产物
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/.next/standalone ./
-COPY --from=builder /app/.next/static ./.next/static
-COPY --from=builder /app/prisma ./prisma
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/server.ts ./
-COPY --from=builder /app/package.json ./package.json
-
-# 安装 Prisma 客户端
-RUN npx prisma generate
-
-EXPOSE 3000
-
-CMD ["node", "server.ts"]
-```
-
-##### 2. 创建 docker-compose.yml
-```yaml
-version: '3.8'
-services:
-  domain-test:
-    build: .
-    ports:
-      - "3000:3000"
-    environment:
-      - NODE_ENV=production
-      - PORT=3000
-    restart: unless-stopped
-    volumes:
-      - ./logs:/app/logs
-      - ./db:/app/db
-```
-
-##### 3. 启动 Docker 服务
-```bash
-# 构建并启动
-docker-compose up -d
+docker-compose -f docker-compose.prod.yml ps
 
 # 查看日志
-docker-compose logs -f
+docker-compose -f docker-compose.prod.yml logs -f
 
 # 停止服务
-docker-compose down
+docker-compose -f docker-compose.prod.yml down
 
-# 更新并重启
-docker-compose build --no-cache
-docker-compose up -d
+# 重启服务
+docker-compose -f docker-compose.prod.yml restart
+
+# 更新服务
+docker-compose -f docker-compose.prod.yml pull
+docker-compose -f docker-compose.prod.yml up -d --force-recreate
 ```
 
-#### 方法四：Nginx 反向代理
+## 📋 详细文档
 
-##### 1. 安装 Nginx
-```bash
-# Ubuntu/Debian
-sudo apt install nginx -y
-
-# CentOS/RHEL
-sudo yum install nginx -y
-```
-
-##### 2. 配置 Nginx
-```bash
-sudo nano /etc/nginx/sites-available/domain-test
-```
-
-```nginx
-server {
-    listen 80;
-    server_name your-domain.com www.your-domain.com;
-    
-    location / {
-        proxy_pass http://localhost:3000;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-        proxy_cache_bypass $http_upgrade;
-    }
-    
-    # 静态文件缓存
-    location /_next/static/ {
-        alias /var/www/domain-test/.next/static/;
-        expires 1y;
-        add_header Cache-Control "public, immutable";
-    }
-    
-    # 启用 gzip 压缩
-    gzip on;
-    gzip_vary on;
-    gzip_min_length 1024;
-    gzip_types text/plain text/css text/xml text/javascript application/javascript application/xml+rss application/json;
-}
-```
-
-##### 3. 启用配置
-```bash
-sudo ln -s /etc/nginx/sites-available/domain-test /etc/nginx/sites-enabled/
-sudo nginx -t
-sudo systemctl reload nginx
-```
-
-### 环境变量配置
-
-创建 `.env` 文件：
-```bash
-# 应用配置
-NODE_ENV=production
-PORT=3000
-HOST=0.0.0.0
-
-# 数据库配置（如果使用）
-DATABASE_URL="file:./dev.db"
-
-# 日志配置
-LOG_LEVEL=info
-LOG_FILE=./logs/app.log
-
-# 安全配置
-CORS_ORIGIN=http://localhost:3000,https://your-domain.com
-```
-
-### 性能优化
-
-#### PM2 集群模式
-```bash
-# 安装 PM2
-npm install -g pm2
-
-# 启动集群模式（根据CPU核心数）
-pm2 start server.ts -i max --name "domain-test"
-
-# 设置内存限制
-pm2 start server.ts --max-memory-restart 500M
-
-# 保存 PM2 配置
-pm2 save
-pm2 startup
-```
-
-#### 系统优化
-```bash
-# Linux 系统优化（需要 root 权限）
-# 增加文件描述符限制
-echo "* soft nofile 65536" >> /etc/security/limits.conf
-echo "* hard nofile 65536" >> /etc/security/limits.conf
-
-# 优化网络参数
-cat >> /etc/sysctl.conf << EOF
-# 网络优化
-net.core.rmem_max = 16777216
-net.core.wmem_max = 16777216
-net.ipv4.tcp_rmem = 4096 87380 16777216
-net.ipv4.tcp_wmem = 4096 16384 16777216
-net.core.netdev_max_backlog = 5000
-net.ipv4.tcp_congestion_control = bbr
-EOF
-
-sysctl -p
-```
-
-### 监控和日志
-
-#### PM2 监控
-```bash
-# 安装 PM2 监控面板
-pm2 install pm2-web
-
-# 查看实时监控
-pm2 monit
-
-# 查看日志
-pm2 logs domain-test
-
-# 安装日志轮转
-pm2 install pm2-logrotate
-```
-
-#### 系统监控
-```bash
-# 使用 htop 监控系统资源
-sudo apt install htop -y
-htop
-
-# 监控应用日志
-tail -f /var/log/domain-test/app.log
-
-# 监控系统日志
-journalctl -u domain-test -f
-```
-
-### 安全配置
-
-#### 防火墙配置
-```bash
-# Ubuntu/Debian (UFW)
-sudo ufw allow 22/tcp    # SSH
-sudo ufw allow 80/tcp    # HTTP
-sudo ufw allow 443/tcp   # HTTPS
-sudo ufw enable
-
-# CentOS/RHEL (Firewalld)
-sudo firewall-cmd --permanent --add-service=ssh
-sudo firewall-cmd --permanent --add-service=http
-sudo firewall-cmd --permanent --add-service=https
-sudo firewall-cmd --reload
-```
-
-#### SSL 证书配置（Let's Encrypt）
-```bash
-# 安装 Certbot
-sudo apt install certbot python3-certbot-nginx -y
-
-# 获取 SSL 证书
-sudo certbot --nginx -d your-domain.com -d www.your-domain.com
-
-# 自动续期
-sudo crontab -e
-# 添加以下行：
-0 12 * * * /usr/bin/certbot renew --quiet
-```
+- [🐳 Docker 部署指南](./DOCKER-DEPLOYMENT.md)
+- [🚀 快速开始指南](./QUICK-START.md)
 
 ## 🎯 使用方法
 
@@ -857,7 +351,7 @@ sysctl -p
 ## 📁 项目结构
 
 ```
-website-performance-tester/
+website-performance-tool/
 ├── src/
 │   ├── app/                          # Next.js App Router
 │   │   ├── api/                      # API 路由
@@ -879,20 +373,38 @@ website-performance-tester/
 ├── public/                           # 静态资源
 ├── examples/
 │   └── websocket/                    # WebSocket 示例
+├── .github/
+│   └── workflows/
+│       └── docker-publish.yml        # GitHub Actions 工作流
 ├── domain-test-cli.js               # 命令行测试工具
 ├── server.ts                        # 服务器入口文件
+├── Dockerfile                        # 生产环境 Docker 镜像
+├── Dockerfile.dev                    # 开发环境 Docker 镜像
+├── docker-compose.prod.yml           # 生产环境编排
+├── docker-compose.dev.yml            # 开发环境编排
+├── .env.prod                         # 环境变量模板
+├── .dockerignore                     # Docker 构建排除
+├── docker-manager.sh                 # Docker 管理脚本
+├── DOCKER-DEPLOYMENT.md             # Docker 部署指南
+├── QUICK-START.md                   # 快速开始指南
 ├── next.config.ts                   # Next.js 配置
 ├── tailwind.config.ts              # Tailwind CSS 配置
 ├── tsconfig.json                    # TypeScript 配置
 ├── package.json                     # 项目依赖
-├── README.md                       # 项目文档
-├── 使用说明.md                      # 详细使用说明
-└── CDN测试说明.md                    # CDN 测试说明
+└── README.md                        # 项目文档
 ```
 
 ## 🔄 更新日志
 
-### v2.3.0 (当前版本)
+### v3.0.0 (当前版本)
+- ✅ 完整的 Docker CI/CD 方案
+- ✅ GitHub Actions 自动构建和推送到 Docker Hub
+- ✅ 多平台支持（linux/amd64, linux/arm64）
+- ✅ 优化的多阶段 Docker 镜像构建
+- ✅ 完整的部署文档和管理脚本
+- ✅ 项目精简和重构
+
+### v2.3.0
 - ✅ 修复中国地区DNS服务器排序问题，确保优先显示
 - ✅ 优化检测速度，实现并发处理和超时控制
 - ✅ 替换失效的DNS服务器（澳门、雅加达、马尼拉、悉尼）
@@ -955,14 +467,19 @@ MIT License - 详见 [LICENSE](LICENSE) 文件
 如果您在使用过程中遇到问题或有改进建议，请：
 
 1. 查看[故障排除](#-故障排除)部分
-2. 搜索现有的 [Issues](https://github.com/your-repo/issues)
-3. 创建新的 Issue 描述问题
-4. 联系维护团队
+2. 查看 [Docker 部署指南](./DOCKER-DEPLOYMENT.md)
+3. 搜索现有的 [GitHub Issues](https://github.com/pjy02/website-performance-tool/issues)
+4. 创建新的 Issue 描述问题
+
+---
+
+**项目地址**: https://github.com/pjy02/website-performance-tool  
+**Docker 镜像**: pjy02/website-performance-tool
+
+---
+
+**⭐ 如果这个项目对您有帮助，请给个 Star！**
 
 ---
 
 **免责声明**: 本工具仅供学习和测试使用，请勿用于非法用途。使用者需自行承担使用风险。
-
----
-
-如有问题或建议，请随时反馈。这个工具旨在帮助开发者更好地理解和优化他们的网站性能、CDN配置和网络架构。
