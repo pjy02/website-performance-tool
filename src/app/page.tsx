@@ -672,7 +672,7 @@ export default function Home() {
                     <CardContent>
                       <div className="text-2xl font-bold">
                         <AnimatedTime 
-                          time={testResult?.testResults?.connection?.totalTime || 0} 
+                          time={testResult.testResults.connection?.totalTime || 0} 
                           animationType="bounce"
                         />
                       </div>
@@ -690,7 +690,7 @@ export default function Home() {
                     <CardContent>
                       <div className="text-2xl font-bold">
                         <AnimatedTime 
-                          time={testResult?.testResults?.dns?.resolutionTime || 0} 
+                          time={testResult.testResults.dns?.resolutionTime || 0} 
                           animationType="bounce"
                         />
                       </div>
@@ -704,14 +704,14 @@ export default function Home() {
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                       <CardTitle className="text-sm font-medium">HTTP状态</CardTitle>
                       <AnimatedHttpStatus 
-                        statusCode={testResult?.testResults?.connection?.statusCode || 0}
+                        statusCode={testResult.testResults.connection?.statusCode || 0}
                         size="sm"
                       />
                     </CardHeader>
                     <CardContent>
                       <div className="text-2xl font-bold">
                         <AnimatedHttpStatus 
-                          statusCode={testResult?.testResults?.connection?.statusCode || 0}
+                          statusCode={testResult.testResults.connection?.statusCode || 0}
                           showCode={true}
                         />
                       </div>
@@ -725,25 +725,25 @@ export default function Home() {
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                       <CardTitle className="text-sm font-medium">连接类型</CardTitle>
                       <AnimatedCDNBreathing 
-                        isThroughCDN={testResult?.testResults?.cdn?.connectionType === 'cdn'}
-                        provider={testResult?.testResults?.cdn?.provider}
-                        confidence={testResult?.testResults?.cdn?.confidence}
+                        isThroughCDN={testResult.testResults.cdn?.connectionType === 'cdn'}
+                        provider={testResult.testResults.cdn?.provider}
+                        confidence={testResult.testResults.cdn?.confidence}
                         size="sm"
                       />
                     </CardHeader>
                     <CardContent>
                       <div className="text-2xl font-bold">
-                        {testResult?.testResults?.cdn?.connectionType === 'cdn' && 'CDN加速'}
-                        {testResult?.testResults?.cdn?.connectionType === 'direct' && '直连'}
-                        {testResult?.testResults?.cdn?.connectionType === 'proxy' && '代理'}
-                        {testResult?.testResults?.cdn?.connectionType === 'mixed' && '混合'}
+                        {testResult.testResults.cdn?.connectionType === 'cdn' && 'CDN加速'}
+                        {testResult.testResults.cdn?.connectionType === 'direct' && '直连'}
+                        {testResult.testResults.cdn?.connectionType === 'proxy' && '代理'}
+                        {testResult.testResults.cdn?.connectionType === 'mixed' && '混合'}
                       </div>
                       <p className="text-xs text-muted-foreground">
-                        {testResult?.testResults?.cdn?.provider || '未知提供商'} 
-                        ({testResult?.testResults?.cdn?.confidence === 'high' ? '高置信度' : 
-                          testResult?.testResults?.cdn?.confidence === 'medium' ? '中等置信度' : '低置信度'})
+                        {testResult.testResults.cdn?.provider || '未知提供商'} 
+                        ({testResult.testResults.cdn?.confidence === 'high' ? '高置信度' : 
+                          testResult.testResults.cdn?.confidence === 'medium' ? '中等置信度' : '低置信度'})
                       </p>
-                      {testResult?.testResults?.cdn?.hasProxyHeaders && (
+                      {testResult.testResults.cdn?.hasProxyHeaders && (
                         <div className="mt-2">
                           <Badge variant="outline" className="text-xs">
                             检测到代理头信息
@@ -770,7 +770,7 @@ export default function Home() {
                         <span>DNS解析:</span>
                         <span className="font-mono">
                           <AnimatedTime 
-                            time={testResult?.testResults?.dns?.resolutionTime || 0} 
+                            time={testResult.testResults.dns?.resolutionTime || 0} 
                             animationType="slide"
                             showUnit={true}
                           />
@@ -780,18 +780,18 @@ export default function Home() {
                         <span>TCP连接:</span>
                         <span className="font-mono">
                           <AnimatedTime 
-                            time={testResult?.testResults?.connection?.tcpTime || 0} 
+                            time={testResult.testResults.connection?.tcpTime || 0} 
                             animationType="slide"
                             showUnit={true}
                           />
                         </span>
                       </div>
-                      {testResult?.testResults?.connection?.sslTime && (
+                      {testResult.testResults.connection?.sslTime && (
                         <div className="flex justify-between text-sm">
                           <span>SSL握手:</span>
                           <span className="font-mono">
                             <AnimatedTime 
-                              time={testResult?.testResults?.connection?.sslTime} 
+                              time={testResult.testResults.connection.sslTime} 
                               animationType="slide"
                               showUnit={true}
                             />
@@ -802,7 +802,7 @@ export default function Home() {
                         <span>首字节(TTFB):</span>
                         <span className="font-mono">
                           <AnimatedTime 
-                            time={testResult?.testResults?.connection?.ttfb || 0} 
+                            time={testResult.testResults.connection?.ttfb || 0} 
                             animationType="slide"
                             showUnit={true}
                           />
@@ -812,7 +812,7 @@ export default function Home() {
                         <span>内容下载:</span>
                         <span className="font-mono">
                           <AnimatedTime 
-                            time={testResult?.testResults?.connection?.downloadTime || 0} 
+                            time={testResult.testResults.connection?.downloadTime || 0} 
                             animationType="slide"
                             showUnit={true}
                           />
@@ -823,7 +823,7 @@ export default function Home() {
                           <span>总计:</span>
                           <span className="font-mono">
                             <AnimatedTime 
-                              time={testResult?.testResults?.connection?.totalTime || 0} 
+                              time={testResult.testResults.connection?.totalTime || 0} 
                               animationType="bounce"
                               showUnit={true}
                             />
@@ -844,14 +844,14 @@ export default function Home() {
                       <div className="flex justify-between text-sm">
                         <span>解析IP:</span>
                         <span className="font-mono text-xs">
-                          {testResult?.testResults?.dns?.resolvedIPs?.join(', ') || 'N/A'}
+                          {testResult.testResults.dns?.resolvedIPs?.join(', ') || 'N/A'}
                         </span>
                       </div>
                       <div className="flex justify-between text-sm">
                         <span>响应大小:</span>
                         <span className="font-mono">
                           <AnimatedBytes 
-                            bytes={testResult?.testResults?.server?.responseSize || 0} 
+                            bytes={testResult.testResults.server?.responseSize || 0} 
                             animationType="bounce"
                           />
                         </span>
@@ -860,7 +860,7 @@ export default function Home() {
                         <span>服务器响应:</span>
                         <span className="font-mono">
                           <AnimatedTime 
-                            time={testResult?.testResults?.server?.responseTime || 0} 
+                            time={testResult.testResults.server?.responseTime || 0} 
                             animationType="slide"
                             showUnit={true}
                           />
@@ -879,7 +879,7 @@ export default function Home() {
                     <CardContent className="space-y-3">
                       <div className="flex justify-between text-sm">
                         <span>服务器软件:</span>
-                        <span className="font-mono text-xs">{testResult?.testResults?.server?.software || '未知'}</span>
+                        <span className="font-mono text-xs">{testResult.testResults.server?.software || '未知'}</span>
                       </div>
                       <div className="flex justify-between text-sm">
                         <span>测试时间:</span>
@@ -903,21 +903,21 @@ export default function Home() {
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-4">
-                    {testResult?.testResults?.multiLocationPing ? (
+                    {testResult.testResults.multiLocationPing ? (
                       <>
                         <div className="grid grid-cols-2 gap-4">
                           <div className="space-y-2">
                             <div className="text-sm font-medium">检测位置</div>
                             <div className="text-lg font-bold">
-                              {testResult?.testResults?.multiLocationPing?.locations.length || 0} 个地点
+                              {testResult.testResults.multiLocationPing?.locations.length || 0} 个地点
                             </div>
                           </div>
                           <div className="space-y-2">
                             <div className="text-sm font-medium">IP一致性</div>
                             <div className="text-lg font-bold">
-                              {testResult?.testResults?.multiLocationPing?.ipConsistency === 'consistent' && '一致'}
-                              {testResult?.testResults?.multiLocationPing?.ipConsistency === 'inconsistent' && '不一致'}
-                              {testResult?.testResults?.multiLocationPing?.ipConsistency === 'mixed' && '混合'}
+                              {testResult.testResults.multiLocationPing?.ipConsistency === 'consistent' && '一致'}
+                              {testResult.testResults.multiLocationPing?.ipConsistency === 'inconsistent' && '不一致'}
+                              {testResult.testResults.multiLocationPing?.ipConsistency === 'mixed' && '混合'}
                             </div>
                           </div>
                         </div>
@@ -925,53 +925,53 @@ export default function Home() {
                         <div className="space-y-2">
                           <div className="text-sm font-medium">唯一IP地址</div>
                           <div className="text-lg font-bold">
-                            {testResult?.testResults?.multiLocationPing?.uniqueIPs.length || 0} 个
+                            {testResult.testResults.multiLocationPing?.uniqueIPs.length || 0} 个
                           </div>
                           <div className="text-xs text-muted-foreground">
-                            {testResult?.testResults?.multiLocationPing?.uniqueIPs.join(', ') || '无'}
+                            {testResult.testResults.multiLocationPing?.uniqueIPs.join(', ') || '无'}
                           </div>
                         </div>
 
                         <div className="space-y-2">
                           <div className="text-sm font-medium">地理覆盖</div>
                           <div className="text-lg font-bold">
-                            {testResult?.testResults?.multiLocationPing?.geographicDistribution.coverage || '未知'}
+                            {testResult.testResults.multiLocationPing?.geographicDistribution.coverage || '未知'}
                           </div>
                           <div className="text-xs text-muted-foreground">
-                            检测区域: {testResult?.testResults?.multiLocationPing?.regions.join(', ') || '无'}
+                            检测区域: {testResult.testResults.multiLocationPing?.regions.join(', ') || '无'}
                           </div>
                         </div>
 
                         <div className="space-y-2">
                           <div className="text-sm font-medium">分析结果</div>
                           <div className="text-sm p-3 bg-muted rounded-md">
-                            {testResult?.testResults?.multiLocationPing?.analysis}
+                            {testResult.testResults.multiLocationPing.analysis}
                           </div>
                         </div>
 
-                        {testResult?.testResults?.cdn?.multiLocationAnalysis && (
+                        {testResult.testResults.cdn.multiLocationAnalysis && (
                           <div className="space-y-2">
                             <div className="text-sm font-medium">CDN检测结果</div>
                             <div className="text-sm p-3 bg-muted rounded-md">
                               <div className="flex items-center gap-2 mb-2">
-                                {testResult?.testResults?.cdn?.multiLocationAnalysis?.isCDNByIP ? (
+                                {testResult.testResults.cdn.multiLocationAnalysis?.isCDNByIP ? (
                                   <CheckCircle className="h-4 w-4 text-green-500" />
                                 ) : (
                                   <AlertCircle className="h-4 w-4 text-red-500" />
                                 )}
                                 <span className="font-medium">
-                                  {testResult?.testResults?.cdn?.multiLocationAnalysis?.isCDNByIP ? '检测到CDN' : '未检测到CDN'}
+                                  {testResult.testResults.cdn.multiLocationAnalysis?.isCDNByIP ? '检测到CDN' : '未检测到CDN'}
                                 </span>
                                 <Badge variant={
-                                  testResult?.testResults?.cdn?.multiLocationAnalysis?.confidence === 'high' ? 'default' :
-                                  testResult?.testResults?.cdn?.multiLocationAnalysis?.confidence === 'medium' ? 'secondary' : 'outline'
+                                  testResult.testResults.cdn.multiLocationAnalysis?.confidence === 'high' ? 'default' :
+                                  testResult.testResults.cdn.multiLocationAnalysis?.confidence === 'medium' ? 'secondary' : 'outline'
                                 }>
-                                  {testResult?.testResults?.cdn?.multiLocationAnalysis?.confidence === 'high' ? '高置信度' :
-                                   testResult?.testResults?.cdn?.multiLocationAnalysis?.confidence === 'medium' ? '中等置信度' : '低置信度'}
+                                  {testResult.testResults.cdn.multiLocationAnalysis?.confidence === 'high' ? '高置信度' :
+                                   testResult.testResults.cdn.multiLocationAnalysis?.confidence === 'medium' ? '中等置信度' : '低置信度'}
                                 </Badge>
                               </div>
                               <div className="text-xs text-muted-foreground">
-                                {testResult?.testResults?.cdn?.multiLocationAnalysis?.reasoning || '无分析结果'}
+                                {testResult.testResults.cdn.multiLocationAnalysis?.reasoning || '无分析结果'}
                               </div>
                             </div>
                           </div>
@@ -1003,9 +1003,9 @@ export default function Home() {
                         locations={['北京', '上海', '广州', '深圳', '成都', '杭州', '南京', '武汉']}
                         currentLocation="正在检测..."
                       />
-                    ) : testResult?.testResults?.multiLocationPing ? (
+                    ) : testResult.testResults.multiLocationPing ? (
                       <div className="space-y-3 max-h-96 overflow-y-auto">
-                        {testResult?.testResults?.multiLocationPing?.pingResults?.map((result, index) => (
+                        {testResult.testResults.multiLocationPing?.pingResults?.map((result, index) => (
                           <div key={index} className="flex items-center justify-between p-3 border rounded-lg">
                             <div className="flex items-center gap-3">
                               {result?.success ? (
@@ -1057,45 +1057,45 @@ export default function Home() {
                     <div className="flex items-center justify-between">
                       <span className="text-sm font-medium">连接类型:</span>
                       <Badge variant={
-                        testResult?.testResults?.cdn?.connectionType === 'cdn' ? 'default' :
-                        testResult?.testResults?.cdn?.connectionType === 'direct' ? 'secondary' :
-                        testResult?.testResults?.cdn?.connectionType === 'proxy' ? 'outline' : 'destructive'
+                        testResult.testResults.cdn.connectionType === 'cdn' ? 'default' :
+                        testResult.testResults.cdn.connectionType === 'direct' ? 'secondary' :
+                        testResult.testResults.cdn.connectionType === 'proxy' ? 'outline' : 'destructive'
                       }>
-                        {testResult?.testResults?.cdn?.connectionType === 'cdn' && 'CDN加速'}
-                        {testResult?.testResults?.cdn?.connectionType === 'direct' && '直连'}
-                        {testResult?.testResults?.cdn?.connectionType === 'proxy' && '代理'}
-                        {testResult?.testResults?.cdn?.connectionType === 'mixed' && '混合'}
+                        {testResult.testResults.cdn.connectionType === 'cdn' && 'CDN加速'}
+                        {testResult.testResults.cdn.connectionType === 'direct' && '直连'}
+                        {testResult.testResults.cdn.connectionType === 'proxy' && '代理'}
+                        {testResult.testResults.cdn.connectionType === 'mixed' && '混合'}
                       </Badge>
                     </div>
                     
                     <div className="flex items-center justify-between">
                       <span className="text-sm font-medium">检测置信度:</span>
                       <Badge variant={
-                        testResult?.testResults?.cdn?.confidence === 'high' ? 'default' :
-                        testResult?.testResults?.cdn?.confidence === 'medium' ? 'outline' : 'secondary'
+                        testResult.testResults.cdn.confidence === 'high' ? 'default' :
+                        testResult.testResults.cdn.confidence === 'medium' ? 'outline' : 'secondary'
                       }>
-                        {testResult?.testResults?.cdn?.confidence === 'high' && '高置信度'}
-                        {testResult?.testResults?.cdn?.confidence === 'medium' && '中等置信度'}
-                        {testResult?.testResults?.cdn?.confidence === 'low' && '低置信度'}
+                        {testResult.testResults.cdn.confidence === 'high' && '高置信度'}
+                        {testResult.testResults.cdn.confidence === 'medium' && '中等置信度'}
+                        {testResult.testResults.cdn.confidence === 'low' && '低置信度'}
                       </Badge>
                     </div>
                     
                     <div className="flex items-center justify-between">
                       <span className="text-sm font-medium">CDN 提供商:</span>
                       <Badge variant="outline">
-                        {testResult?.testResults?.cdn?.provider || '未检测到'}
+                        {testResult.testResults.cdn.provider || '未检测到'}
                       </Badge>
                     </div>
                     
                     <div className="flex items-center justify-between">
                       <span className="text-sm font-medium">代理头信息:</span>
-                      <Badge variant={testResult?.testResults?.cdn?.hasProxyHeaders ? "outline" : "secondary"}>
-                        {testResult?.testResults?.cdn?.hasProxyHeaders ? '检测到' : '未检测到'}
+                      <Badge variant={testResult.testResults.cdn.hasProxyHeaders ? "outline" : "secondary"}>
+                        {testResult.testResults.cdn.hasProxyHeaders ? '检测到' : '未检测到'}
                       </Badge>
                     </div>
 
                     {/* 多地Ping分析结果 */}
-                    {testResult?.testResults?.multiLocationPing && (
+                    {testResult.testResults.multiLocationPing && (
                       <>
                         <div className="border-t pt-3 mt-3">
                           <div className="text-sm font-medium mb-2">多地Ping检测结果:</div>
@@ -1103,39 +1103,39 @@ export default function Home() {
                             <div className="flex items-center justify-between">
                               <span className="text-sm">IP一致性:</span>
                               <Badge variant={
-                                testResult?.testResults?.multiLocationPing?.ipConsistency === 'consistent' ? 'secondary' :
-                                testResult?.testResults?.multiLocationPing?.ipConsistency === 'inconsistent' ? 'default' : 'outline'
+                                testResult.testResults.multiLocationPing?.ipConsistency === 'consistent' ? 'secondary' :
+                                testResult.testResults.multiLocationPing?.ipConsistency === 'inconsistent' ? 'default' : 'outline'
                               }>
-                                {testResult?.testResults?.multiLocationPing?.ipConsistency === 'consistent' && '一致'}
-                                {testResult?.testResults?.multiLocationPing?.ipConsistency === 'inconsistent' && '不一致'}
-                                {testResult?.testResults?.multiLocationPing?.ipConsistency === 'mixed' && '混合'}
+                                {testResult.testResults.multiLocationPing?.ipConsistency === 'consistent' && '一致'}
+                                {testResult.testResults.multiLocationPing?.ipConsistency === 'inconsistent' && '不一致'}
+                                {testResult.testResults.multiLocationPing?.ipConsistency === 'mixed' && '混合'}
                               </Badge>
                             </div>
                             <div className="flex items-center justify-between">
                               <span className="text-sm">唯一IP数量:</span>
                               <span className="text-sm font-mono">
-                                {testResult?.testResults?.multiLocationPing?.uniqueIPs.length || 0} 个
+                                {testResult.testResults.multiLocationPing?.uniqueIPs.length || 0} 个
                               </span>
                             </div>
                           </div>
                         </div>
 
-                        {testResult?.testResults?.cdn?.multiLocationAnalysis && (
+                        {testResult.testResults.cdn?.multiLocationAnalysis && (
                           <div className="border-t pt-3 mt-3">
                             <div className="text-sm font-medium mb-2">IP分析结论:</div>
                             <div className="text-xs p-2 bg-muted rounded">
                               <div className="flex items-center gap-2 mb-1">
-                                {testResult?.testResults?.cdn?.multiLocationAnalysis.isCDNByIP ? (
+                                {testResult.testResults.cdn.multiLocationAnalysis.isCDNByIP ? (
                                   <CheckCircle className="h-3 w-3 text-green-500" />
                                 ) : (
                                   <AlertCircle className="h-3 w-3 text-red-500" />
                                 )}
                                 <span className="font-medium text-xs">
-                                  {testResult?.testResults?.cdn?.multiLocationAnalysis.isCDNByIP ? 'IP分析表明使用CDN' : 'IP分析表明直连'}
+                                  {testResult.testResults.cdn.multiLocationAnalysis.isCDNByIP ? 'IP分析表明使用CDN' : 'IP分析表明直连'}
                                 </span>
                               </div>
                               <div className="text-xs text-muted-foreground">
-                                {testResult?.testResults?.cdn?.multiLocationAnalysis.reasoning || '无分析结果'}
+                                {testResult.testResults.cdn.multiLocationAnalysis.reasoning || '无分析结果'}
                               </div>
                             </div>
                           </div>
@@ -1147,7 +1147,7 @@ export default function Home() {
                     <div className="space-y-2">
                       <h4 className="text-sm font-medium">分析结果:</h4>
                       <div className="space-y-1 max-h-32 overflow-y-auto">
-                        {testResult?.testResults?.cdn?.analysis?.map((analysis, index) => (
+                        {testResult.testResults.cdn?.analysis?.map((analysis, index) => (
                           <div key={index} className="text-xs text-muted-foreground">
                             • {analysis}
                           </div>
@@ -1155,11 +1155,11 @@ export default function Home() {
                       </div>
                     </div>
                     
-                    {testResult?.testResults?.cdn?.isThroughCDN && (
+                    {testResult.testResults.cdn?.isThroughCDN && (
                       <div className="space-y-2">
                         <h4 className="text-sm font-medium">CDN 头信息:</h4>
                         <div className="space-y-1 max-h-32 overflow-y-auto">
-                          {Object.entries(testResult?.testResults?.cdn?.headers || {}).map(([key, value]) => (
+                          {Object.entries(testResult.testResults.cdn?.headers || {}).map(([key, value]) => (
                             value && (
                               <div key={key} className="flex justify-between text-sm">
                                 <span className="font-mono text-xs">{key}:</span>
@@ -1171,11 +1171,11 @@ export default function Home() {
                       </div>
                     )}
                     
-                    {testResult?.testResults?.cdn?.hasProxyHeaders && (
+                    {testResult.testResults.cdn?.hasProxyHeaders && (
                       <div className="space-y-2">
                         <h4 className="text-sm font-medium">代理头信息:</h4>
                         <div className="space-y-1 max-h-32 overflow-y-auto">
-                          {Object.entries(testResult?.testResults?.cdn?.proxyHeaders || {}).map(([key, value]) => (
+                          {Object.entries(testResult.testResults.cdn?.proxyHeaders || {}).map(([key, value]) => (
                             value && (
                               <div key={key} className="flex justify-between text-sm">
                                 <span className="font-mono text-xs">{key}:</span>
@@ -1202,16 +1202,16 @@ export default function Home() {
                       <div className="space-y-2 text-sm">
                         <div className="flex justify-between">
                           <span>总响应时间:</span>
-                          <span className="font-mono">{formatTime(testResult?.testResults?.connection?.totalTime || 0)}</span>
+                          <span className="font-mono">{formatTime(testResult.testResults.connection?.totalTime || 0)}</span>
                         </div>
                         <div className="flex justify-between">
                           <span>DNS解析时间:</span>
-                          <span className="font-mono">{formatTime(testResult?.testResults?.dns?.resolutionTime || 0)}</span>
+                          <span className="font-mono">{formatTime(testResult.testResults.dns?.resolutionTime || 0)}</span>
                         </div>
                         <div className="flex justify-between">
                           <span>网络传输时间:</span>
                           <span className="font-mono">
-                            {formatTime((testResult?.testResults?.connection?.totalTime || 0) - (testResult?.testResults?.dns?.resolutionTime || 0))}
+                            {formatTime((testResult.testResults.connection?.totalTime || 0) - (testResult.testResults.dns?.resolutionTime || 0))}
                           </span>
                         </div>
                       </div>
@@ -1225,7 +1225,7 @@ export default function Home() {
 
             <AnimatedTabsContent value="optimization">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                {testResult?.testResults?.optimization ? (
+                {testResult.testResults.optimization ? (
                   <>
                     <Card>
                       <CardHeader>
@@ -1240,24 +1240,24 @@ export default function Home() {
                       <CardContent className="space-y-4">
                         <div className="text-center space-y-2">
                           <div className="text-4xl font-bold">
-                            {testResult?.testResults?.optimization?.overall.score || 0}
+                            {testResult.testResults.optimization?.overall.score || 0}
                             <span className="text-2xl text-muted-foreground">/100</span>
                           </div>
                           <Badge variant={
-                            testResult?.testResults?.optimization?.overall.grade === 'A+' ? 'default' :
-                            testResult?.testResults?.optimization?.overall.grade === 'A' ? 'default' :
-                            testResult?.testResults?.optimization?.overall.grade === 'B' ? 'secondary' :
-                            testResult?.testResults?.optimization?.overall.grade === 'C' ? 'outline' : 'destructive'
+                            testResult.testResults.optimization?.overall.grade === 'A+' ? 'default' :
+                            testResult.testResults.optimization?.overall.grade === 'A' ? 'default' :
+                            testResult.testResults.optimization?.overall.grade === 'B' ? 'secondary' :
+                            testResult.testResults.optimization?.overall.grade === 'C' ? 'outline' : 'destructive'
                           } className="text-lg px-3 py-1">
-                            等级: {testResult?.testResults?.optimization?.overall.grade || 'N/A'}
+                            等级: {testResult.testResults.optimization?.overall.grade || 'N/A'}
                           </Badge>
                         </div>
 
-                        {testResult?.testResults?.optimization?.overall?.recommendations && testResult?.testResults?.optimization?.overall?.recommendations?.length > 0 && (
+                        {testResult.testResults.optimization?.overall.recommendations && testResult.testResults.optimization.overall.recommendations.length > 0 && (
                           <div className="space-y-2">
                             <h4 className="font-medium text-sm">优先改进建议:</h4>
                             <div className="space-y-1">
-                              {testResult?.testResults?.optimization?.overall?.recommendations?.map((rec, index) => (
+                              {testResult.testResults.optimization.overall.recommendations.map((rec, index) => (
                                 <div key={index} className="flex items-start gap-2 text-sm">
                                   <AlertCircle className="h-3 w-3 text-yellow-500 mt-0.5 flex-shrink-0" />
                                   <span>{rec}</span>
@@ -1288,7 +1288,7 @@ export default function Home() {
                           const allSuggestions: OptimizationSuggestion[] = [];
                           
                           // 添加CDN建议
-                          testResult?.testResults?.optimization?.cdn?.suggestions?.forEach((suggestion: any) => {
+                          testResult.testResults.optimization?.cdn?.suggestions?.forEach((suggestion: any) => {
                             allSuggestions.push({
                               text: suggestion.text,
                               level: suggestion.level,
@@ -1297,7 +1297,7 @@ export default function Home() {
                           });
                           
                           // 添加性能建议
-                          testResult?.testResults?.optimization?.performance?.suggestions?.forEach((suggestion: any) => {
+                          testResult.testResults.optimization?.performance?.suggestions?.forEach((suggestion: any) => {
                             allSuggestions.push({
                               text: suggestion.text,
                               level: suggestion.level,
@@ -1306,7 +1306,7 @@ export default function Home() {
                           });
                           
                           // 添加安全建议
-                          testResult?.testResults?.optimization?.ssl?.suggestions?.forEach((suggestion: any) => {
+                          testResult.testResults.optimization?.ssl?.suggestions?.forEach((suggestion: any) => {
                             allSuggestions.push({
                               text: suggestion.text,
                               level: suggestion.level,
@@ -1375,15 +1375,15 @@ export default function Home() {
                   <CardContent className="space-y-3">
                     <div className="flex justify-between text-sm">
                       <span>服务器软件:</span>
-                      <span className="font-mono text-xs">{testResult?.testResults?.server?.software || '未知'}</span>
+                      <span className="font-mono text-xs">{testResult.testResults.server?.software || '未知'}</span>
                     </div>
                     <div className="flex justify-between text-sm">
                       <span>响应大小:</span>
-                      <span className="font-mono">{formatBytes(testResult?.testResults?.server?.responseSize || 0)}</span>
+                      <span className="font-mono">{formatBytes(testResult.testResults.server?.responseSize || 0)}</span>
                     </div>
                     <div className="flex justify-between text-sm">
                       <span>服务器响应时间:</span>
-                      <span className="font-mono">{formatTime(testResult?.testResults?.server?.responseTime || 0)}</span>
+                      <span className="font-mono">{formatTime(testResult.testResults.server?.responseTime || 0)}</span>
                     </div>
                     <div className="flex justify-between text-sm">
                       <span>测试域名:</span>
@@ -1402,7 +1402,7 @@ export default function Home() {
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-2 max-h-96 overflow-y-auto">
-                      {Object.entries(testResult?.testResults?.server?.headers || {}).map(([key, value]) => (
+                      {Object.entries(testResult.testResults.server?.headers || {}).map(([key, value]) => (
                         <div key={key} className="flex justify-between text-sm">
                           <span className="font-mono text-xs font-medium">{key}:</span>
                           <span className="font-mono text-xs break-all max-w-[60%] text-right">{value}</span>
@@ -1415,7 +1415,7 @@ export default function Home() {
             </AnimatedTabsContent>
 
             <AnimatedTabsContent value="ssl">
-              {testResult?.testResults?.ssl ? (
+              {testResult.testResults.ssl ? (
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                   <Card>
                     <CardHeader>
@@ -1427,20 +1427,20 @@ export default function Home() {
                     <CardContent className="space-y-3">
                       <div className="flex justify-between text-sm">
                         <span>颁发机构:</span>
-                        <span className="font-mono text-xs">{testResult?.testResults?.ssl?.issuer || '未知'}</span>
+                        <span className="font-mono text-xs">{testResult.testResults.ssl?.issuer || '未知'}</span>
                       </div>
                       <div className="flex justify-between text-sm">
                         <span>生效时间:</span>
-                        <span className="font-mono text-xs">{testResult?.testResults?.ssl?.validFrom || '未知'}</span>
+                        <span className="font-mono text-xs">{testResult.testResults.ssl?.validFrom || '未知'}</span>
                       </div>
                       <div className="flex justify-between text-sm">
                         <span>过期时间:</span>
-                        <span className="font-mono text-xs">{testResult?.testResults?.ssl?.validTo || '未知'}</span>
+                        <span className="font-mono text-xs">{testResult.testResults.ssl?.validTo || '未知'}</span>
                       </div>
                       <div className="text-sm">
                         <span className="block mb-2">域名范围:</span>
                         <div className="space-y-1">
-                          {formatDomainScope(testResult?.testResults?.ssl?.subjectAltName || '')}
+                          {formatDomainScope(testResult.testResults.ssl?.subjectAltName || '')}
                         </div>
                       </div>
                     </CardContent>
