@@ -14,7 +14,7 @@
 
 ```bash
 # 1. 克隆项目
-git clone https://github.com/pjy02/website-performance-tool.git
+git clone https://github.com/233bit/website-performance-tool.git
 cd website-performance-tool
 
 # 2. 启动生产环境
@@ -28,14 +28,14 @@ docker-compose -f docker-compose.prod.yml up -d
 
 ```bash
 # 1. 拉取镜像
-docker pull pjy02/website-performance-tool:latest
+docker pull 233bit/website-performance-tool:latest
 
 # 2. 运行容器
 docker run -d \
   --name website-performance-tool \
   -p 3000:3000 \
   --restart unless-stopped \
-  pjy02/website-performance-tool:latest
+  233bit/website-performance-tool:latest
 
 # 3. 访问应用
 # 浏览器打开: http://localhost:3000
@@ -130,8 +130,8 @@ docker network prune
 ## 📚 更多信息
 
 - **完整文档**: [DOCKER-DEPLOYMENT.md](./DOCKER-DEPLOYMENT.md)
-- **GitHub仓库**: https://github.com/pjy02/website-performance-tool
-- **Docker镜像**: pjy02/website-performance-tool
+- **GitHub仓库**: https://github.com/233bit/website-performance-tool
+- **Docker镜像**: 233bit/website-performance-tool
 
 ---
 

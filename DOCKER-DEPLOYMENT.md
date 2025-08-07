@@ -4,8 +4,8 @@
 
 ## 📋 项目信息
 
-- **GitHub 仓库**: https://github.com/pjy02/website-performance-tool
-- **Docker Hub 镜像**: `docker.io/pjy02/website-performance-tool`
+- **GitHub 仓库**: https://github.com/233bit/website-performance-tool
+- **Docker Hub 镜像**: `docker.io/233bit/website-performance-tool`
 - **支持平台**: linux/amd64, linux/arm64
 
 ## 🎯 部署流程
@@ -14,7 +14,7 @@
 
 在您的 GitHub 仓库中配置以下 Secrets：
 
-1. **DOCKERHUB_USERNAME**: `pjy02`
+1. **DOCKERHUB_USERNAME**: `233bit`
 2. **DOCKERHUB_TOKEN**: 您的 Docker Hub Access Token
 
 #### 获取 Docker Hub Access Token:
@@ -39,7 +39,7 @@
 #### 快速部署
 ```bash
 # 在 Ubuntu 服务器上
-git clone https://github.com/pjy02/website-performance-tool.git
+git clone https://github.com/233bit/website-performance-tool.git
 cd website-performance-tool
 
 # 启动生产环境
@@ -52,14 +52,14 @@ docker-compose -f docker-compose.prod.yml logs -f
 #### 直接使用 Docker Hub 镜像
 ```bash
 # 拉取镜像
-docker pull pjy02/website-performance-tool:latest
+docker pull 233bit/website-performance-tool:latest
 
 # 运行容器
 docker run -d \
   --name website-performance-tool \
   -p 3000:3000 \
   --restart unless-stopped \
-  pjy02/website-performance-tool:latest
+  233bit/website-performance-tool:latest
 ```
 
 ## 📁 文件结构
@@ -131,7 +131,7 @@ docker-compose -f docker-compose.prod.yml restart
 ### 生产环境 (.env.prod)
 ```bash
 # Docker Hub 配置
-DOCKERHUB_USERNAME=pjy02
+DOCKERHUB_USERNAME=233bit
 REPO_NAME=website-performance-tool
 IMAGE_TAG=latest
 
@@ -206,7 +206,7 @@ echo "更新完成!"
 docker login
 
 # 手动拉取测试
-docker pull pjy02/website-performance-tool:latest
+docker pull 233bit/website-performance-tool:latest
 ```
 
 #### 2. 端口冲突
@@ -329,7 +329,7 @@ deploy:
 3. 确认环境变量配置
 4. 验证网络连接
 
-**项目地址**: https://github.com/pjy02/website-performance-tool
+**项目地址**: https://github.com/233bit/website-performance-tool
 
 ---
 
@@ -337,7 +337,7 @@ deploy:
 
 ```bash
 # 1. 克隆项目
-git clone https://github.com/pjy02/website-performance-tool.git
+git clone https://github.com/233bit/website-performance-tool.git
 cd website-performance-tool
 
 # 2. 启动生产环境

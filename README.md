@@ -76,7 +76,7 @@ npm run dev
 
 ```bash
 # 克隆项目
-git clone https://github.com/pjy02/website-performance-tool.git
+git clone https://github.com/233bit/website-performance-tool.git
 cd website-performance-tool
 
 # 启动生产环境
@@ -91,7 +91,7 @@ docker-compose -f docker-compose.prod.yml up -d
 项目配置了 GitHub Actions，实现：
 
 - ✅ 自动构建 Docker 镜像
-- ✅ 自动推送到 Docker Hub (`pjy02/website-performance-tool`)
+- ✅ 自动推送到 Docker Hub (`233bit/website-performance-tool`)
 - ✅ 支持多平台构建（linux/amd64, linux/arm64）
 - ✅ 自动标签管理（latest, 版本号等）
 
@@ -99,14 +99,14 @@ docker-compose -f docker-compose.prod.yml up -d
 
 ```bash
 # 拉取镜像
-docker pull pjy02/website-performance-tool:latest
+docker pull 233bit/website-performance-tool:latest
 
 # 运行容器
 docker run -d \
   --name website-performance-tool \
   -p 3000:3000 \
   --restart unless-stopped \
-  pjy02/website-performance-tool:latest
+  233bit/website-performance-tool:latest
 ```
 
 ### 管理命令
@@ -468,13 +468,13 @@ MIT License - 详见 [LICENSE](LICENSE) 文件
 
 1. 查看[故障排除](#-故障排除)部分
 2. 查看 [Docker 部署指南](./DOCKER-DEPLOYMENT.md)
-3. 搜索现有的 [GitHub Issues](https://github.com/pjy02/website-performance-tool/issues)
+3. 搜索现有的 [GitHub Issues](https://github.com/233bit/website-performance-tool/issues)
 4. 创建新的 Issue 描述问题
 
 ---
 
-**项目地址**: https://github.com/pjy02/website-performance-tool  
-**Docker 镜像**: pjy02/website-performance-tool
+**项目地址**: https://github.com/233bit/website-performance-tool  
+**Docker 镜像**: 233bit/website-performance-tool
 
 ---
 
