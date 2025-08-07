@@ -14,7 +14,7 @@
 
 ```bash
 # 1. 克隆项目
-git clone https://github.com/pjy02/website-performance-tool.git
+git clone https://github.com/233bit/website-performance-tool.git
 cd website-performance-tool
 
 # 2. 启动生产环境
@@ -130,7 +130,7 @@ docker network prune
 ## 📚 更多信息
 
 - **完整文档**: [DOCKER-DEPLOYMENT.md](./DOCKER-DEPLOYMENT.md)
-- **GitHub仓库**: https://github.com/pjy02/website-performance-tool
+- **GitHub仓库**: https://github.com/233bit/website-performance-tool
 - **Docker镜像**: 233bit/website-performance-tool
 
 ---

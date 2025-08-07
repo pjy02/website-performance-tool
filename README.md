@@ -76,7 +76,7 @@ npm run dev
 
 ```bash
 # 克隆项目
-git clone https://github.com/pjy02/website-performance-tool.git
+git clone https://github.com/233bit/website-performance-tool.git
 cd website-performance-tool
 
 # 启动生产环境
