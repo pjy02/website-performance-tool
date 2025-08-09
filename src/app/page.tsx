@@ -280,6 +280,8 @@ export default function Home() {
     progress: number;
     message: string;
   } | null>(null);
+  const [isProgressExiting, setIsProgressExiting] = useState(false);
+  const [shouldContentMoveUp, setShouldContentMoveUp] = useState(false);
 
   const runDomainTest = async () => {
     if (!domain.trim()) {
@@ -290,6 +292,7 @@ export default function Home() {
     setIsLoading(true);
     setIsPingLoading(true);
     setError(null);
+    setShouldContentMoveUp(false); // 重置内容区域移动状态
     setTestProgress({
       stage: 'dns',
       progress: 0,
@@ -361,12 +364,12 @@ export default function Home() {
         id: Date.now().toString(),
         timestamp: new Date().toISOString(),
         domain: data.domain,
-        totalTime: data.testResults.connection.totalTime,
-        statusCode: data.testResults.connection.statusCode,
-        isThroughCDN: data.testResults.cdn.isThroughCDN,
-        cdnProvider: data.testResults.cdn.provider,
-        dnsResolutionTime: data.testResults.dns.resolutionTime,
-        serverSoftware: data.testResults.server.software,
+        totalTime: data?.testResults?.connection?.totalTime || 0,
+        statusCode: data?.testResults?.connection?.statusCode || 0,
+        isThroughCDN: data?.testResults?.cdn?.isThroughCDN || false,
+        cdnProvider: data?.testResults?.cdn?.provider,
+        dnsResolutionTime: data?.testResults?.dns?.resolutionTime || 0,
+        serverSoftware: data?.testResults?.server?.software || '未知',
       };
       
       setTestHistory(prev => [historyItem, ...prev].slice(0, 20)); // 保留最近20条记录
@@ -374,14 +377,32 @@ export default function Home() {
       // 清理进度更新定时器
       clearInterval(progressInterval);
       
-      // 3秒后清除进度显示
+      // 3秒后开始淡出动画
       setTimeout(() => {
-        setTestProgress(null);
+        setIsProgressExiting(true);
+        // 淡出动画完成后移除进度框并让内容区域移动
+        setTimeout(() => {
+          setTestProgress(null);
+          setIsProgressExiting(false);
+          setShouldContentMoveUp(true);
+          // 内容区域移动完成后重置状态
+          setTimeout(() => {
+            setShouldContentMoveUp(false);
+          }, 600); // 略长于动画时间
+        }, 500); // 与动画持续时间匹配
       }, 3000);
       
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unknown error occurred');
-      setTestProgress(null);
+      setIsProgressExiting(true);
+      setTimeout(() => {
+        setTestProgress(null);
+        setIsProgressExiting(false);
+        setShouldContentMoveUp(true);
+        setTimeout(() => {
+          setShouldContentMoveUp(false);
+        }, 600);
+      }, 500);
     } finally {
       setIsLoading(false);
       setIsPingLoading(false);
@@ -395,7 +416,15 @@ export default function Home() {
         setAutoTestInterval(null);
       }
       setIsAutoTesting(false);
-      setTestProgress(null);
+      setIsProgressExiting(true);
+      setTimeout(() => {
+        setTestProgress(null);
+        setIsProgressExiting(false);
+        setShouldContentMoveUp(true);
+        setTimeout(() => {
+          setShouldContentMoveUp(false);
+        }, 600);
+      }, 500);
     } else {
       if (!domain.trim()) {
         setError('请输入要测试的域名');
@@ -587,19 +616,45 @@ export default function Home() {
               </div>
               
               {/* 测试进度指示器 */}
-              {testProgress && (
-                <div className="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
+              <div className="mt-4">
+                {/* 固定高度占位符，确保Card高度不会突然变化 */}
+                <div 
+                  className="transition-all duration-500 ease-in-out overflow-hidden relative z-10"
+                  style={{ 
+                    height: (testProgress || isProgressExiting) ? '180px' : '0px',
+                    opacity: (testProgress || isProgressExiting) ? 1 : 0
+                  }}
+                >
+                  {(testProgress || isProgressExiting) && (
+                    <motion.div 
+                      className="p-4 bg-blue-50 rounded-lg border border-blue-200"
+                      initial={{ opacity: 1, y: 0 }}
+                      animate={{ 
+                        opacity: isProgressExiting ? 0 : 1, 
+                        y: isProgressExiting ? -20 : 0 
+                      }}
+                      transition={{ 
+                        duration: 0.5, 
+                        ease: "easeInOut" 
+                      }}
+                      onAnimationComplete={() => {
+                        if (isProgressExiting) {
+                          setTestProgress(null);
+                          setIsProgressExiting(false);
+                        }
+                      }}
+                    >
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-sm font-medium text-blue-800">检测进度</span>
                     <span className="text-xs text-blue-600">
-                      {testProgress.progress}% - {testProgress.message}
+                      {testProgress?.progress || 0}% - {testProgress?.message || ''}
                     </span>
                   </div>
                   <div className="w-full bg-blue-200 rounded-full h-2">
                     <motion.div
                       className="bg-blue-600 h-2 rounded-full transition-all duration-300 ease-out"
                       initial={{ width: "0%" }}
-                      animate={{ width: `${testProgress.progress}%` }}
+                      animate={{ width: `${testProgress?.progress || 0}%` }}
                       transition={{ 
                         duration: 0.3,
                         ease: "easeOut"
@@ -608,44 +663,59 @@ export default function Home() {
                   </div>
                   <div className="mt-2 grid grid-cols-2 gap-2 text-xs text-blue-700">
                     <div className="flex items-center gap-1">
-                      <div className={`w-2 h-2 rounded-full ${testProgress.stage === 'dns' || testProgress.progress > 0 ? 'bg-blue-500 animate-pulse' : 'bg-blue-300'}`}></div>
-                      <span className={testProgress.stage === 'dns' || testProgress.progress > 0 ? 'font-medium' : ''}>DNS解析</span>
+                      <div className={`w-2 h-2 rounded-full ${testProgress?.stage === 'dns' || (testProgress?.progress || 0) > 0 ? 'bg-blue-500 animate-pulse' : 'bg-blue-300'}`}></div>
+                      <span className={testProgress?.stage === 'dns' || (testProgress?.progress || 0) > 0 ? 'font-medium' : ''}>DNS解析</span>
                     </div>
                     <div className="flex items-center gap-1">
-                      <div className={`w-2 h-2 rounded-full ${testProgress.stage === 'connection' || testProgress.progress > 20 ? 'bg-blue-500 animate-pulse' : 'bg-blue-300'}`} style={{ animationDelay: '0.1s' }}></div>
-                      <span className={testProgress.stage === 'connection' || testProgress.progress > 20 ? 'font-medium' : ''}>连接测试</span>
+                      <div className={`w-2 h-2 rounded-full ${testProgress?.stage === 'connection' || (testProgress?.progress || 0) > 20 ? 'bg-blue-500 animate-pulse' : 'bg-blue-300'}`} style={{ animationDelay: '0.1s' }}></div>
+                      <span className={testProgress?.stage === 'connection' || (testProgress?.progress || 0) > 20 ? 'font-medium' : ''}>连接测试</span>
                     </div>
                     <div className="flex items-center gap-1">
-                      <div className={`w-2 h-2 rounded-full ${testProgress.stage === 'cdn' || testProgress.progress > 50 ? 'bg-blue-500 animate-pulse' : 'bg-blue-300'}`} style={{ animationDelay: '0.2s' }}></div>
-                      <span className={testProgress.stage === 'cdn' || testProgress.progress > 50 ? 'font-medium' : ''}>CDN检测</span>
+                      <div className={`w-2 h-2 rounded-full ${testProgress?.stage === 'cdn' || (testProgress?.progress || 0) > 50 ? 'bg-blue-500 animate-pulse' : 'bg-blue-300'}`} style={{ animationDelay: '0.2s' }}></div>
+                      <span className={testProgress?.stage === 'cdn' || (testProgress?.progress || 0) > 50 ? 'font-medium' : ''}>CDN检测</span>
                     </div>
                     <div className="flex items-center gap-1">
-                      <div className={`w-2 h-2 rounded-full ${testProgress.stage === 'ssl' || testProgress.progress > 70 ? 'bg-blue-500 animate-pulse' : 'bg-blue-300'}`} style={{ animationDelay: '0.3s' }}></div>
-                      <span className={testProgress.stage === 'ssl' || testProgress.progress > 70 ? 'font-medium' : ''}>SSL证书</span>
+                      <div className={`w-2 h-2 rounded-full ${testProgress?.stage === 'ssl' || (testProgress?.progress || 0) > 70 ? 'bg-blue-500 animate-pulse' : 'bg-blue-300'}`} style={{ animationDelay: '0.3s' }}></div>
+                      <span className={testProgress?.stage === 'ssl' || (testProgress?.progress || 0) > 70 ? 'font-medium' : ''}>SSL证书</span>
                     </div>
                     <div className="flex items-center gap-1">
-                      <div className={`w-2 h-2 rounded-full ${testProgress.stage === 'geo' || testProgress.progress > 85 ? 'bg-blue-500 animate-pulse' : 'bg-blue-300'}`} style={{ animationDelay: '0.4s' }}></div>
-                      <span className={testProgress.stage === 'geo' || testProgress.progress > 85 ? 'font-medium' : ''}>地理位置</span>
+                      <div className={`w-2 h-2 rounded-full ${testProgress?.stage === 'geo' || (testProgress?.progress || 0) > 85 ? 'bg-blue-500 animate-pulse' : 'bg-blue-300'}`} style={{ animationDelay: '0.4s' }}></div>
+                      <span className={testProgress?.stage === 'geo' || (testProgress?.progress || 0) > 85 ? 'font-medium' : ''}>地理位置</span>
                     </div>
                     <div className="flex items-center gap-1">
-                      <div className={`w-2 h-2 rounded-full ${testProgress.stage === 'optimization' || testProgress.progress > 95 ? 'bg-blue-500 animate-pulse' : 'bg-blue-300'}`} style={{ animationDelay: '0.5s' }}></div>
-                      <span className={testProgress.stage === 'optimization' || testProgress.progress > 95 ? 'font-medium' : ''}>优化建议</span>
+                      <div className={`w-2 h-2 rounded-full ${testProgress?.stage === 'optimization' || (testProgress?.progress || 0) > 95 ? 'bg-blue-500 animate-pulse' : 'bg-blue-300'}`} style={{ animationDelay: '0.5s' }}></div>
+                      <span className={testProgress?.stage === 'optimization' || (testProgress?.progress || 0) > 95 ? 'font-medium' : ''}>优化建议</span>
                     </div>
                   </div>
+                </motion.div>
+                  )}
                 </div>
-              )}
+              </div>
             </CardContent>
           </Card>
         </AnimatedInputSection>
 
-        <InlineAnimatedMessage 
-          type="error" 
-          message={error} 
-          isVisible={!!error} 
-        />
+        <motion.div
+          initial={false}
+          animate={{ 
+            y: shouldContentMoveUp ? -20 : 0,
+            opacity: shouldContentMoveUp ? 1 : 0.7
+          }}
+          transition={{ 
+            duration: 0.5, 
+            ease: "easeInOut",
+            delay: shouldContentMoveUp ? 0.1 : 0
+          }}
+          className="space-y-4"
+        >
+          <InlineAnimatedMessage 
+            type="error" 
+            message={error} 
+            isVisible={!!error} 
+          />
 
-        {testResult && (
-          <AnimatedTabs defaultValue="overview" className="space-y-4">
+          {testResult && (
+            <AnimatedTabs defaultValue="overview" className="space-y-4">
             <AnimatedTabsList className="grid w-full grid-cols-8">
               <AnimatedTabsTrigger value="overview">概览</AnimatedTabsTrigger>
               <AnimatedTabsTrigger value="performance">性能</AnimatedTabsTrigger>
@@ -1506,17 +1576,58 @@ export default function Home() {
             </AnimatedTabsContent>
           </AnimatedTabs>
         )}
+        </motion.div>
 
         {!testResult && !isLoading && !error && (
-          <Card>
-            <CardContent className="flex flex-col items-center justify-center py-12">
-              <Globe className="h-12 w-12 text-muted-foreground mb-4" />
-              <h3 className="text-lg font-semibold mb-2">开始域名性能检测</h3>
-              <p className="text-muted-foreground text-center mb-4">
-                输入要测试的域名，获取详细的性能分析报告，包括CDN状态、网络延迟、SSL证书和服务器信息
-              </p>
-            </CardContent>
-          </Card>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ 
+              duration: 0.6, 
+              ease: "easeOut",
+              delay: 0.2
+            }}
+          >
+            <Card>
+              <CardContent className="flex flex-col items-center justify-center py-12">
+                <motion.div
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ 
+                    duration: 0.5, 
+                    ease: "easeOut",
+                    delay: 0.4
+                  }}
+                >
+                  <Globe className="h-12 w-12 text-muted-foreground mb-4" />
+                </motion.div>
+                <motion.h3 
+                  className="text-lg font-semibold mb-2"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ 
+                    duration: 0.4, 
+                    ease: "easeOut",
+                    delay: 0.6
+                  }}
+                >
+                  开始域名性能检测
+                </motion.h3>
+                <motion.p 
+                  className="text-muted-foreground text-center mb-4"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ 
+                    duration: 0.4, 
+                    ease: "easeOut",
+                    delay: 0.8
+                  }}
+                >
+                  输入要测试的域名，获取详细的性能分析报告，包括CDN状态、网络延迟、SSL证书和服务器信息
+                </motion.p>
+              </CardContent>
+            </Card>
+          </motion.div>
         )}
       </div>
     </div>
